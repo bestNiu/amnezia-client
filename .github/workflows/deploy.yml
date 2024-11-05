@@ -1,4 +1,4 @@
-name: 'deploy-Deploy workflow'
+name: 'Deploy workflow'
 
 on:
   push:
@@ -19,61 +19,61 @@ jobs:
       DEV_AGW_PUBLIC_KEY: ${{ secrets.DEV_AGW_PUBLIC_KEY }}
 
     steps:
-    - name: 'Install Qt'
-      uses: jurplel/install-qt-action@v3
-      with:
-        version: ${{ env.QT_VERSION }}
-        host: 'linux'
-        target: 'desktop'
-        arch: 'gcc_64'
-        modules: 'qtremoteobjects qt5compat qtshadertools'
-        dir: ${{ runner.temp }}
-        setup-python: 'true'
-        tools: 'tools_ifw'
-        set-env: 'true'
-        extra: '--external 7z --base ${{ env.QT_MIRROR }}'
+      - name: 'Install Qt'
+        uses: jurplel/install-qt-action@v3
+        with:
+          version: ${{ env.QT_VERSION }}
+          host: 'linux'
+          target: 'desktop'
+          arch: 'gcc_64'
+          modules: 'qtremoteobjects qt5compat qtshadertools'
+          dir: ${{ runner.temp }}
+          setup-python: 'true'
+          tools: 'tools_ifw'
+          set-env: 'true'
+          extra: '--external 7z --base ${{ env.QT_MIRROR }}'
 
-    - name: 'Get sources'
-      uses: actions/checkout@v4
-      with:
-        submodules: 'true'
-        fetch-depth: 10
+      - name: 'Get sources'
+        uses: actions/checkout@v4
+        with:
+          submodules: 'true'
+          fetch-depth: 10
 
-    - name: 'Setup ccache'
-      uses: hendrikmuhs/ccache-action@v1.2
+      - name: 'Setup ccache'
+        uses: hendrikmuhs/ccache-action@v1.2
 
-    - name: 'Build project'
-      run: |
-        sudo apt-get install libxkbcommon-x11-0
-        export QT_BIN_DIR=${{ runner.temp }}/Qt/${{ env.QT_VERSION }}/gcc_64/bin
-        export QIF_BIN_DIR=${{ runner.temp }}/Qt/Tools/QtInstallerFramework/${{ env.QIF_VERSION }}/bin
-        bash deploy/build_linux.sh
+      - name: 'Build project'
+        run: |
+          sudo apt-get install libxkbcommon-x11-0
+          export QT_BIN_DIR=${{ runner.temp }}/Qt/${{ env.QT_VERSION }}/gcc_64/bin
+          export QIF_BIN_DIR=${{ runner.temp }}/Qt/Tools/QtInstallerFramework/${{ env.QIF_VERSION }}/bin
+          bash deploy/build_linux.sh
 
-    - name: 'Pack installer'
-      run: cd deploy && tar -cf AmneziaVPN_Linux_Installer.tar AmneziaVPN_Linux_Installer.bin
+      - name: 'Pack installer'
+        run: cd deploy && tar -cf AmneziaVPN_Linux_Installer.tar AmneziaVPN_Linux_Installer.bin
 
-    - name: 'Upload installer artifact'
-      uses: actions/upload-artifact@v4
-      with:
-        name: AmneziaVPN_Linux_installer.tar
-        path: deploy/AmneziaVPN_Linux_Installer.tar
-        retention-days: 7
+      - name: 'Upload installer artifact'
+        uses: actions/upload-artifact@v4
+        with:
+          name: AmneziaVPN_Linux_installer.tar
+          path: deploy/AmneziaVPN_Linux_Installer.tar
+          retention-days: 7
 
-    - name: 'Upload unpacked artifact'
-      uses: actions/upload-artifact@v4
-      with:
-        name: AmneziaVPN_Linux_unpacked
-        path: deploy/AppDir
-        retention-days: 7
+      - name: 'Upload unpacked artifact'
+        uses: actions/upload-artifact@v4
+        with:
+          name: AmneziaVPN_Linux_unpacked
+          path: deploy/AppDir
+          retention-days: 7
 
-    - name: 'Upload translations artifact'
-      uses: actions/upload-artifact@v4
-      with:
-        name: AmneziaVPN_translations
-        path: client/translations
-        retention-days: 7
+      - name: 'Upload translations artifact'
+        uses: actions/upload-artifact@v4
+        with:
+          name: AmneziaVPN_translations
+          path: client/translations
+          retention-days: 7
 
-# ------------------------------------------------------
+  # ------------------------------------------------------
 
   Build-Windows:
     runs-on: windows-latest
@@ -86,57 +86,57 @@ jobs:
       DEV_AGW_PUBLIC_KEY: ${{ secrets.DEV_AGW_PUBLIC_KEY }}
 
     steps:
-    - name: 'Get sources'
-      uses: actions/checkout@v4
-      with:
-        submodules: 'true'
-        fetch-depth: 10
+      - name: 'Get sources'
+        uses: actions/checkout@v4
+        with:
+          submodules: 'true'
+          fetch-depth: 10
 
-    - name: 'Setup ccache'
-      uses: hendrikmuhs/ccache-action@v1.2
+      - name: 'Setup ccache'
+        uses: hendrikmuhs/ccache-action@v1.2
 
-    - name: 'Install Qt'
-      uses: jurplel/install-qt-action@v3
-      with:
-        version: ${{ env.QT_VERSION }}
-        host: 'windows'
-        target: 'desktop'
-        arch: 'win64_msvc2019_64'
-        modules: 'qtremoteobjects qt5compat qtshadertools'
-        dir: ${{ runner.temp }}
-        setup-python: 'true'
-        tools: 'tools_ifw'
-        set-env: 'true'
-        extra: '--external 7z --base ${{ env.QT_MIRROR }}'
+      - name: 'Install Qt'
+        uses: jurplel/install-qt-action@v3
+        with:
+          version: ${{ env.QT_VERSION }}
+          host: 'windows'
+          target: 'desktop'
+          arch: 'win64_msvc2019_64'
+          modules: 'qtremoteobjects qt5compat qtshadertools'
+          dir: ${{ runner.temp }}
+          setup-python: 'true'
+          tools: 'tools_ifw'
+          set-env: 'true'
+          extra: '--external 7z --base ${{ env.QT_MIRROR }}'
 
-    - name: 'Setup mvsc'
-      uses: ilammy/msvc-dev-cmd@v1
-      with:
-        arch: 'x64'
+      - name: 'Setup mvsc'
+        uses: ilammy/msvc-dev-cmd@v1
+        with:
+          arch: 'x64'
 
-    - name: 'Build project'
-      shell: cmd
-      run: |
-        set BUILD_ARCH=${{ env.BUILD_ARCH }}
-        set QT_BIN_DIR="${{ runner.temp }}\\Qt\\${{ env.QT_VERSION }}\\msvc2019_64\\bin"
-        set QIF_BIN_DIR="${{ runner.temp }}\\Qt\\Tools\\QtInstallerFramework\\${{ env.QIF_VERSION }}\\bin"
-        call deploy\\build_windows.bat
+      - name: 'Build project'
+        shell: cmd
+        run: |
+          set BUILD_ARCH=${{ env.BUILD_ARCH }}
+          set QT_BIN_DIR="${{ runner.temp }}\\Qt\\${{ env.QT_VERSION }}\\msvc2019_64\\bin"
+          set QIF_BIN_DIR="${{ runner.temp }}\\Qt\\Tools\\QtInstallerFramework\\${{ env.QIF_VERSION }}\\bin"
+          call deploy\\build_windows.bat
 
-    - name: 'Upload installer artifact'
-      uses: actions/upload-artifact@v4
-      with:
-        name: AmneziaVPN_Windows_installer
-        path: AmneziaVPN_x${{ env.BUILD_ARCH }}.exe
-        retention-days: 7
+      - name: 'Upload installer artifact'
+        uses: actions/upload-artifact@v4
+        with:
+          name: AmneziaVPN_Windows_installer
+          path: AmneziaVPN_x${{ env.BUILD_ARCH }}.exe
+          retention-days: 7
 
-    - name: 'Upload unpacked artifact'
-      uses: actions/upload-artifact@v4
-      with:
-        name: AmneziaVPN_Windows_unpacked
-        path: deploy\\build_${{ env.BUILD_ARCH }}\\client\\Release
-        retention-days: 7
+      - name: 'Upload unpacked artifact'
+        uses: actions/upload-artifact@v4
+        with:
+          name: AmneziaVPN_Windows_unpacked
+          path: deploy\\build_${{ env.BUILD_ARCH }}\\client\\Release
+          retention-days: 7
 
-# ------------------------------------------------------
+  # ------------------------------------------------------
 
   Build-iOS:
     runs-on: macos-13
@@ -149,86 +149,86 @@ jobs:
       DEV_AGW_PUBLIC_KEY: ${{ secrets.DEV_AGW_PUBLIC_KEY }}
 
     steps:
-    - name: 'Setup xcode'
-      uses: maxim-lobanov/setup-xcode@v1
-      with:
-        xcode-version: '15.2'
+      - name: 'Setup xcode'
+        uses: maxim-lobanov/setup-xcode@v1
+        with:
+          xcode-version: '15.2'
 
-    - name: 'Install desktop Qt'
-      uses: jurplel/install-qt-action@v3
-      with:
-        version: ${{ env.QT_VERSION }}
-        host: 'mac'
-        target: 'desktop'
-        modules: 'qtremoteobjects qt5compat qtshadertools qtmultimedia'
-        arch: 'clang_64'
-        dir: ${{ runner.temp }}
-        set-env: 'true'
-        extra: '--base ${{ env.QT_MIRROR }}'
+      - name: 'Install desktop Qt'
+        uses: jurplel/install-qt-action@v3
+        with:
+          version: ${{ env.QT_VERSION }}
+          host: 'mac'
+          target: 'desktop'
+          modules: 'qtremoteobjects qt5compat qtshadertools qtmultimedia'
+          arch: 'clang_64'
+          dir: ${{ runner.temp }}
+          set-env: 'true'
+          extra: '--base ${{ env.QT_MIRROR }}'
 
-    - name: 'Install iOS Qt'
-      uses: jurplel/install-qt-action@v3
-      with:
-        version: ${{ env.QT_VERSION }}
-        host: 'mac'
-        target: 'ios'
-        modules: 'qtremoteobjects qt5compat qtshadertools qtmultimedia'
-        dir: ${{ runner.temp }}
-        setup-python: 'true'
-        set-env: 'true'
-        extra: '--external 7z --base ${{ env.QT_MIRROR }}'
+      - name: 'Install iOS Qt'
+        uses: jurplel/install-qt-action@v3
+        with:
+          version: ${{ env.QT_VERSION }}
+          host: 'mac'
+          target: 'ios'
+          modules: 'qtremoteobjects qt5compat qtshadertools qtmultimedia'
+          dir: ${{ runner.temp }}
+          setup-python: 'true'
+          set-env: 'true'
+          extra: '--external 7z --base ${{ env.QT_MIRROR }}'
 
-    - name: 'Install go'
-      uses: actions/setup-go@v5
-      with:
-        go-version: '1.22.1'
-        cache: false
+      - name: 'Install go'
+        uses: actions/setup-go@v5
+        with:
+          go-version: '1.22.1'
+          cache: false
 
-    - name: 'Setup gomobile'
-      run: |
+      - name: 'Setup gomobile'
+        run: |
           export PATH=$PATH:~/go/bin
           go install golang.org/x/mobile/cmd/gomobile@latest
           gomobile init
 
-    - name: 'Get sources'
-      uses: actions/checkout@v4
-      with:
-        submodules: 'true'
-        fetch-depth: 10
+      - name: 'Get sources'
+        uses: actions/checkout@v4
+        with:
+          submodules: 'true'
+          fetch-depth: 10
 
-    - name: 'Setup ccache'
-      uses: hendrikmuhs/ccache-action@v1.2
+      - name: 'Setup ccache'
+        uses: hendrikmuhs/ccache-action@v1.2
 
-    - name: 'Install dependencies'
-      run: pip install jsonschema jinja2
+      - name: 'Install dependencies'
+        run: pip install jsonschema jinja2
 
-    - name: 'Build project'
-      run: |
-        git submodule update --init --recursive
-        export QT_BIN_DIR="${{ runner.temp }}/Qt/${{ env.QT_VERSION }}/ios/bin"
-        export QT_MACOS_ROOT_DIR="${{ runner.temp }}/Qt/${{ env.QT_VERSION }}/macos"
-        export PATH=$PATH:~/go/bin
-        sh deploy/build_ios.sh
-      env:
-        IOS_TRUST_CERT_BASE64: ${{ secrets.IOS_TRUST_CERT_BASE64 }}
-        IOS_SIGNING_CERT_BASE64: ${{ secrets.IOS_SIGNING_CERT_BASE64 }}
-        IOS_SIGNING_CERT_PASSWORD: ${{ secrets.IOS_SIGNING_CERT_PASSWORD }}
-        APPSTORE_CONNECT_KEY_ID: ${{ secrets.APPSTORE_CONNECT_KEY_ID }}
-        APPSTORE_CONNECT_ISSUER_ID: ${{ secrets.APPSTORE_CONNECT_ISSUER_ID }}
-        APPSTORE_CONNECT_PRIVATE_KEY: ${{ secrets.APPSTORE_CONNECT_PRIVATE_KEY }}
-        IOS_APP_PROVISIONING_PROFILE: ${{ secrets.IOS_APP_PROVISIONING_PROFILE }}
-        IOS_NE_PROVISIONING_PROFILE: ${{ secrets.IOS_NE_PROVISIONING_PROFILE }}
+      - name: 'Build project'
+        run: |
+          git submodule update --init --recursive
+          export QT_BIN_DIR="${{ runner.temp }}/Qt/${{ env.QT_VERSION }}/ios/bin"
+          export QT_MACOS_ROOT_DIR="${{ runner.temp }}/Qt/${{ env.QT_VERSION }}/macos"
+          export PATH=$PATH:~/go/bin
+          sh deploy/build_ios.sh
+        env:
+          IOS_TRUST_CERT_BASE64: ${{ secrets.IOS_TRUST_CERT_BASE64 }}
+          IOS_SIGNING_CERT_BASE64: ${{ secrets.IOS_SIGNING_CERT_BASE64 }}
+          IOS_SIGNING_CERT_PASSWORD: ${{ secrets.IOS_SIGNING_CERT_PASSWORD }}
+          APPSTORE_CONNECT_KEY_ID: ${{ secrets.APPSTORE_CONNECT_KEY_ID }}
+          APPSTORE_CONNECT_ISSUER_ID: ${{ secrets.APPSTORE_CONNECT_ISSUER_ID }}
+          APPSTORE_CONNECT_PRIVATE_KEY: ${{ secrets.APPSTORE_CONNECT_PRIVATE_KEY }}
+          IOS_APP_PROVISIONING_PROFILE: ${{ secrets.IOS_APP_PROVISIONING_PROFILE }}
+          IOS_NE_PROVISIONING_PROFILE: ${{ secrets.IOS_NE_PROVISIONING_PROFILE }}
 
-#    - name: 'Upload appstore .ipa and dSYMs to artifacts'
-#      uses: actions/upload-artifact@v4
-#      with:
-#        name: app-store ipa & dsyms
-#        path: |
-#          ${{ github.workspace }}/AmneziaVPN-iOS.ipa
-#          ${{ github.workspace }}/*.app.dSYM.zip
-#        retention-days: 7
+  #    - name: 'Upload appstore .ipa and dSYMs to artifacts'
+  #      uses: actions/upload-artifact@v4
+  #      with:
+  #        name: app-store ipa & dsyms
+  #        path: |
+  #          ${{ github.workspace }}/AmneziaVPN-iOS.ipa
+  #          ${{ github.workspace }}/*.app.dSYM.zip
+  #        retention-days: 7
 
-# ------------------------------------------------------
+  # ------------------------------------------------------
 
   Build-MacOS:
     runs-on: macos-latest
@@ -241,60 +241,60 @@ jobs:
       DEV_AGW_PUBLIC_KEY: ${{ secrets.DEV_AGW_PUBLIC_KEY }}
 
     steps:
-    - name: 'Setup xcode'
-      uses: maxim-lobanov/setup-xcode@v1
-      with:
-        xcode-version: '14.3.1'
+      - name: 'Setup xcode'
+        uses: maxim-lobanov/setup-xcode@v1
+        with:
+          xcode-version: '14.3.1'
 
-    - name: 'Install Qt'
-      uses: jurplel/install-qt-action@v3
-      with:
-        version: ${{ env.QT_VERSION }}
-        host: 'mac'
-        target: 'desktop'
-        arch: 'clang_64'
-        modules: 'qtremoteobjects qt5compat qtshadertools'
-        dir: ${{ runner.temp }}
-        setup-python: 'true'
-        set-env: 'true'
-        extra: '--external 7z --base ${{ env.QT_MIRROR }}'
+      - name: 'Install Qt'
+        uses: jurplel/install-qt-action@v3
+        with:
+          version: ${{ env.QT_VERSION }}
+          host: 'mac'
+          target: 'desktop'
+          arch: 'clang_64'
+          modules: 'qtremoteobjects qt5compat qtshadertools'
+          dir: ${{ runner.temp }}
+          setup-python: 'true'
+          set-env: 'true'
+          extra: '--external 7z --base ${{ env.QT_MIRROR }}'
 
-    - name: 'Install Qt Installer Framework ${{ env.QIF_VERSION }}'
-      run: |
-        mkdir -pv ${{ runner.temp }}/Qt/Tools/QtInstallerFramework
-        wget https://qt.amzsvc.com/tools/ifw/${{ env.QIF_VERSION }}.zip
-        unzip ${{ env.QIF_VERSION }}.zip -d ${{ runner.temp }}/Qt/Tools/QtInstallerFramework/
+      - name: 'Install Qt Installer Framework ${{ env.QIF_VERSION }}'
+        run: |
+          mkdir -pv ${{ runner.temp }}/Qt/Tools/QtInstallerFramework
+          wget https://qt.amzsvc.com/tools/ifw/${{ env.QIF_VERSION }}.zip
+          unzip ${{ env.QIF_VERSION }}.zip -d ${{ runner.temp }}/Qt/Tools/QtInstallerFramework/
 
-    - name: 'Get sources'
-      uses: actions/checkout@v4
-      with:
-        submodules: 'true'
-        fetch-depth: 10
+      - name: 'Get sources'
+        uses: actions/checkout@v4
+        with:
+          submodules: 'true'
+          fetch-depth: 10
 
-    - name: 'Setup ccache'
-      uses: hendrikmuhs/ccache-action@v1.2
+      - name: 'Setup ccache'
+        uses: hendrikmuhs/ccache-action@v1.2
 
-    - name: 'Build project'
-      run: |
-        export QT_BIN_DIR="${{ runner.temp }}/Qt/${{ env.QT_VERSION }}/macos/bin"
-        export QIF_BIN_DIR="${{ runner.temp }}/Qt/Tools/QtInstallerFramework/${{ env.QIF_VERSION }}/bin"
-        bash deploy/build_macos.sh
+      - name: 'Build project'
+        run: |
+          export QT_BIN_DIR="${{ runner.temp }}/Qt/${{ env.QT_VERSION }}/macos/bin"
+          export QIF_BIN_DIR="${{ runner.temp }}/Qt/Tools/QtInstallerFramework/${{ env.QIF_VERSION }}/bin"
+          bash deploy/build_macos.sh
 
-    - name: 'Upload installer artifact'
-      uses: actions/upload-artifact@v4
-      with:
-        name: AmneziaVPN_MacOS_installer
-        path: AmneziaVPN.dmg
-        retention-days: 7
+      - name: 'Upload installer artifact'
+        uses: actions/upload-artifact@v4
+        with:
+          name: AmneziaVPN_MacOS_installer
+          path: AmneziaVPN.dmg
+          retention-days: 7
 
-    - name: 'Upload unpacked artifact'
-      uses: actions/upload-artifact@v4
-      with:
-        name: AmneziaVPN_MacOS_unpacked
-        path: deploy/build/client/AmneziaVPN.app
-        retention-days: 7
+      - name: 'Upload unpacked artifact'
+        uses: actions/upload-artifact@v4
+        with:
+          name: AmneziaVPN_MacOS_unpacked
+          path: deploy/build/client/AmneziaVPN.app
+          retention-days: 7
 
-# ------------------------------------------------------
+  # ------------------------------------------------------
 
   Build-Android:
     runs-on: ubuntu-latest
@@ -307,181 +307,140 @@ jobs:
       DEV_AGW_PUBLIC_KEY: ${{ secrets.DEV_AGW_PUBLIC_KEY }}
 
     steps:
-    - name: 'Install desktop Qt'
-      uses: jurplel/install-qt-action@v4
-      with:
-        version: ${{ env.QT_VERSION }}
-        host: 'linux'
-        target: 'desktop'
-        arch: 'linux_gcc_64'
-        modules: ${{ env.QT_MODULES }}
-        dir: ${{ runner.temp }}
-        extra: '--external 7z --base ${{ env.QT_MIRROR }}'
+      - name: 'Install desktop Qt'
+        uses: jurplel/install-qt-action@v4
+        with:
+          version: ${{ env.QT_VERSION }}
+          host: 'linux'
+          target: 'desktop'
+          arch: 'linux_gcc_64'
+          modules: ${{ env.QT_MODULES }}
+          dir: ${{ runner.temp }}
+          extra: '--external 7z --base ${{ env.QT_MIRROR }}'
 
-    - name: 'Install android_x86_64 Qt'
-      uses: jurplel/install-qt-action@v4
-      with:
-        version: ${{ env.QT_VERSION }}
-        host: 'linux'
-        target: 'android'
-        arch: 'android_x86_64'
-        modules: ${{ env.QT_MODULES }}
-        dir: ${{ runner.temp }}
-        extra: '--external 7z --base ${{ env.QT_MIRROR }}'
+      - name: 'Install android_x86_64 Qt'
+        uses: jurplel/install-qt-action@v4
+        with:
+          version: ${{ env.QT_VERSION }}
+          host: 'linux'
+          target: 'android'
+          arch: 'android_x86_64'
+          modules: ${{ env.QT_MODULES }}
+          dir: ${{ runner.temp }}
+          extra: '--external 7z --base ${{ env.QT_MIRROR }}'
 
-    - name: 'Install android_x86 Qt'
-      uses: jurplel/install-qt-action@v4
-      with:
-        version: ${{ env.QT_VERSION }}
-        host: 'linux'
-        target: 'android'
-        arch: 'android_x86'
-        modules: ${{ env.QT_MODULES }}
-        dir: ${{ runner.temp }}
-        extra: '--external 7z --base ${{ env.QT_MIRROR }}'
+      - name: 'Install android_x86 Qt'
+        uses: jurplel/install-qt-action@v4
+        with:
+          version: ${{ env.QT_VERSION }}
+          host: 'linux'
+          target: 'android'
+          arch: 'android_x86'
+          modules: ${{ env.QT_MODULES }}
+          dir: ${{ runner.temp }}
+          extra: '--external 7z --base ${{ env.QT_MIRROR }}'
 
-    - name: 'Install android_armv7 Qt'
-      uses: jurplel/install-qt-action@v4
-      with:
-        version: ${{ env.QT_VERSION }}
-        host: 'linux'
-        target: 'android'
-        arch: 'android_armv7'
-        modules: ${{ env.QT_MODULES }}
-        dir: ${{ runner.temp }}
-        extra: '--external 7z --base ${{ env.QT_MIRROR }}'
+      - name: 'Install android_armv7 Qt'
+        uses: jurplel/install-qt-action@v4
+        with:
+          version: ${{ env.QT_VERSION }}
+          host: 'linux'
+          target: 'android'
+          arch: 'android_armv7'
+          modules: ${{ env.QT_MODULES }}
+          dir: ${{ runner.temp }}
+          extra: '--external 7z --base ${{ env.QT_MIRROR }}'
 
-    - name: 'Install android_arm64_v8a Qt'
-      uses: jurplel/install-qt-action@v4
-      with:
-        version: ${{ env.QT_VERSION }}
-        host: 'linux'
-        target: 'android'
-        arch: 'android_arm64_v8a'
-        modules: ${{ env.QT_MODULES }}
-        dir: ${{ runner.temp }}
-        extra: '--external 7z --base ${{ env.QT_MIRROR }}'
+      - name: 'Install android_arm64_v8a Qt'
+        uses: jurplel/install-qt-action@v4
+        with:
+          version: ${{ env.QT_VERSION }}
+          host: 'linux'
+          target: 'android'
+          arch: 'android_arm64_v8a'
+          modules: ${{ env.QT_MODULES }}
+          dir: ${{ runner.temp }}
+          extra: '--external 7z --base ${{ env.QT_MIRROR }}'
 
-    - name: 'Grant execute permission for qt-cmake'
-      shell: bash
-      run: |
-        chmod +x ${{ runner.temp }}/Qt/${{ env.QT_VERSION }}/android_x86_64/bin/qt-cmake
+      - name: 'Grant execute permission for qt-cmake'
+        shell: bash
+        run: |
+          chmod +x ${{ runner.temp }}/Qt/${{ env.QT_VERSION }}/android_x86_64/bin/qt-cmake
 
-    - name: 'Get sources'
-      uses: actions/checkout@v4
-      with:
-        submodules: 'true'
+      - name: 'Get sources'
+        uses: actions/checkout@v4
+        with:
+          submodules: 'true'
 
-    - name: 'Setup ccache'
-      uses: hendrikmuhs/ccache-action@v1.2
+      - name: 'Setup ccache'
+        uses: hendrikmuhs/ccache-action@v1.2
 
-    - name: 'Setup Java'
-      uses: actions/setup-java@v4
-      with:
-        distribution: 'temurin'
-        java-version: '17'
-        cache: 'gradle'
+      - name: 'Setup Java'
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'temurin'
+          java-version: '17'
+          cache: 'gradle'
 
-    - name: 'Setup Android NDK'
-      id: setup-ndk
-      uses: nttld/setup-ndk@v1
-      with:
-        ndk-version: 'r26b'
+      - name: 'Setup Android NDK'
+        id: setup-ndk
+        uses: nttld/setup-ndk@v1
+        with:
+          ndk-version: 'r26b'
 
-    - name: 'Decode keystore secret to file'
-      env:
-        KEYSTORE_BASE64: '/u3+7QAAAAIAAAABAAAAAQAGbXlfa2V5AAABkvokrVQAAAUDMIIE/zAOBgorBgEEASoCEQEBBQAE
-                          ggTrQGRxmxwkISWBRYp3UsTuXlkz6Lq26fqbYosc0Vf++jl+wrqV01XsNhp6yviUetvicR9fdiFJ
-                          8/fJWVFmdhpAIHH5quzNxFclTnY8VmhddJiyCQTc0lWA6DkEWSzSSGzVVWQV/OKjbFmvD1/wQEdr
-                          XXYZsz253WgJYJ69rOjcBqC6XL5O9RS1OQaXuX9FOvLyajbBlZACjhD0UQyMNHepbOUQLwkxgkZD
-                          VuzVMtKAwQDY6uPWYiG0Z5gqXBijdNIaf2eQ254iOR/hNftaX7CK+aKFDSh5rH3i1Q1ER13NJG5k
-                          DpPBWlGrgJL/rUhCMMLbeEgN/q6DqtROVEMUY9yW2Q75Q3GSWJm/zdu3qrhylrf8yLiRwP4sJpef
-                          C5aL+UnZ7O7wOLREsmuJ1nNc9cZMMu2LYkepW+F6u2t6PkDUvhE5JOAxgO0Ew76LHArYrJHmtD3S
-                          03Uh/DFdCfSSBFe1qP5BJcgva+xpKDMSPEs4FgthlXbHXvBAMR01qhiQJM5Ch4s8tKZ8CxaZ9nbj
-                          rzMDHx2bGzsifo66fnF9vMh+SpK+/+rfCRr2/OZBxhjUHpH3+tleFY/vaDAGXPTrYrpMcmBQsCHg
-                          k/0GPoXOembgGM50oVnBuxGccm7UGA0SrbfDBUqO3/23FeauT6UqQr8ZIFBG8/9TFB0N5p/8ecgt
-                          9nXoaoG0g243ZjgrPD+1z5VVw7lloD+MGUSndUWpOj5hcgiIz3qV0E9lHYcmwMgaISGQFWE4gTcO
-                          vANJFHdrftnuzvY560YneOJJVBguupUIexhFwAdGvhMb4D1FA3/bfOJpNx4ysNe2ZF55IPBwE5cU
-                          3IlmFvQzqmxcz+gInE7Y86vhW6Sa8iRNqIj3PzD1Ee8kEZ9lUEm23sZ/fI1BRIFPJTjyJYJ6C9G0
-                          RMJcZQBGWV0JkNXR64fdiw40tGX3EYZK89wYhvZrIPVulq80avkRP6kUAyGW1HsAoxZDQGJvojLD
-                          PSsgyuHUGFON5sNRcgSEhEeGguzWZSbmmFci3zpDv+Kv4xKzpQjCa5IMN0kDKnAUlWGu7ApQibHB
-                          hnjkJkUXnHn+Ok3YC4vDGmn991ZfhBtb6ZFMbsLTEVtmriHReQm3mPChIsusBA1iO7SCOjInwwK8
-                          mkueudKX/ba35egtAeLtz4q5igUctRlKCSNU/pYzhsh0pvSWvZ3cNgU9gCRaAtRv2llVXwChHCwL
-                          yB8RVe0+JHEpHRpHfQyDhK5zPjNV+m0Rf4rAFz4vReL3b2Iu103XIcFVWkx98cpykdeMMtnkfYzO
-                          tMA9F2NwEfrDqA/E/b5ip/iS9TsRCgOD7C7eiK4/bvcQIsassXa1GmrO1GKE2zwAguzwXGc0Aug2
-                          kIRw8mohGrHtcvA03QK7I9WZVCX0GY6NJYQQUJVpN1dfVFUk5gBOT57i3Cq+dn0o3G8R/Ges8OUB
-                          2er/YilUTN9r0RSHAUvUxT2cqQ6497Z51l1JpBXZRz+YOfbrLmKSNXE02QciqzVFko2yJdSfOcUA
-                          aESxvLO3gpZ4L60LxdIAfzG3lHoA1Qz8FM712Hdb3SJogLDX9GzNZnpt0q/MysEaRi9eQlivmzhv
-                          atfgwXuvBufSe5q1noD13y4Kr/x81OgpE0WbkCP+l3DyM+HYSavN30UQ4fzdCPdddqObvLQi3XkN
-                          cO0aKQYC/9AAAAABAAVYLjUwOQAAA1UwggNRMIICOaADAgECAgQlw5cIMA0GCSqGSIb3DQEBCwUA
-                          MFgxCzAJBgNVBAYTAmNuMREwDwYDVQQIEwhzaGFuZ2hhaTELMAkGA1UEBxMCY24xDTALBgNVBAoT
-                          BGV0b24xDTALBgNVBAsTBGxvbmcxCzAJBgNVBAMTAmxpMCAXDTI0MTEwNTAyMjU1M1oYDzIwNTIw
-                          MzIzMDIyNTUzWjBYMQswCQYDVQQGEwJjbjERMA8GA1UECBMIc2hhbmdoYWkxCzAJBgNVBAcTAmNu
-                          MQ0wCwYDVQQKEwRldG9uMQ0wCwYDVQQLEwRsb25nMQswCQYDVQQDEwJsaTCCASIwDQYJKoZIhvcN
-                          AQEBBQADggEPADCCAQoCggEBALejdURQAKSbbgK3iPoHMTGA62gTpipx6AGQVhgI9E5e7gCko1mW
-                          6Mq2crF5Tc6aRw3GGT5fukW+iPfjjI1E29+N7z3G+XKP2oaCjPZtKaeyW6one5pG8kgir3+Fdbn5
-                          9dO4xYLS9/PSgV0mCvxsmjjnNSpuoqXtUB2wwTPl/sGmG8NTD/R5g4PC2iISHZJaci2k3CLzK4xy
-                          UMtYtj5em8XgwHa5BDGucg0qSewxdepHZ9K9wFrZFzXx/RTetsHMOfNifTWNUdCnzUtC21ZSioXl
-                          SiraxYOQwpZMPVtnonm9/YOTANGXyz+CUWyLMN5HtyDvG+RkopJF3FVUWbcsVhMCAwEAAaMhMB8w
-                          HQYDVR0OBBYEFFtYbNn868g+3RNVNFecFdYCkLayMA0GCSqGSIb3DQEBCwUAA4IBAQAhTSacP2Zz
-                          yH70I7mj8fDTbs7uvpeW62dQdqPgbGFBiL9BMIS/QPpZjdnWUeZ6hHgjf3TJVT2JbqaXra+7Q6j6
-                          PSgB44nS3UZTwqQ6wHleQ028safmQyLDNlSeGeaeSPsT+l4E98AY5aAQDknmW5ZatgvSuAcxgOFL
-                          4Qg4SaJQ3W0B1hzMUS5QXcg9zFgbZO+quJkkJGMGcoKCl/rEjWf3B/Ee8V4QgyqSxUl+AjmXCFyT
-                          BGKWcoR7q1fnOrqOiP6y+/6LU9XYN7RTI3ru8zxFgyDPua/pxWDRjxb390GT6Hl37DA6Q0kzwOwZ
-                          q3ytHtjMTnGU0ZlLBz02J0kG1fS30jQOnl9qrNu6ocVrN34pwpfOmnU='
-      shell: bash
-      run: |
-        echo $KEYSTORE_BASE64 | base64 --decode > android.keystore
+      - name: 'Download android.keystore'
+        run: |
+          curl -L -o android.keystore https://down.aibingliben.com/android.keystore
 
-    - name: 'Build project'
-      env:
-        ANDROID_NDK_ROOT: ${{ steps.setup-ndk.outputs.ndk-path }}
-        QT_HOST_PATH: ${{ runner.temp }}/Qt/${{ env.QT_VERSION }}/gcc_64
-        ANDROID_KEYSTORE_PATH: ${{ github.workspace }}/android.keystore
-        ANDROID_KEYSTORE_KEY_ALIAS: 'my_key'
-        ANDROID_KEYSTORE_KEY_PASS: 'cgs123123'
-      shell: bash
-      run: ./deploy/build_android.sh --aab --apk all --build-platform ${{ env.ANDROID_BUILD_PLATFORM }}
+      - name: 'Build project'
+        env:
+          ANDROID_NDK_ROOT: ${{ steps.setup-ndk.outputs.ndk-path }}
+          QT_HOST_PATH: ${{ runner.temp }}/Qt/${{ env.QT_VERSION }}/gcc_64
+          ANDROID_KEYSTORE_PATH: ${{ github.workspace }}/android.keystore
+          ANDROID_KEYSTORE_KEY_ALIAS: ${{ secrets.ANDROID_RELEASE_KEYSTORE_KEY_ALIAS }}
+          ANDROID_KEYSTORE_KEY_PASS: ${{ secrets.ANDROID_RELEASE_KEYSTORE_KEY_PASS }}
+        shell: bash
+        run: ./deploy/build_android.sh --aab --apk all --build-platform ${{ env.ANDROID_BUILD_PLATFORM }}
 
-    - name: 'Upload x86_64 apk'
-      uses: actions/upload-artifact@v4
-      with:
-        name: AmneziaVPN-android-x86_64
-        path: deploy/build/AmneziaVPN-x86_64-release.apk
-        compression-level: 0
-        retention-days: 7
+      - name: 'Upload x86_64 apk'
+        uses: actions/upload-artifact@v4
+        with:
+          name: AmneziaVPN-android-x86_64
+          path: deploy/build/AmneziaVPN-x86_64-release.apk
+          compression-level: 0
+          retention-days: 7
 
-    - name: 'Upload x86 apk'
-      uses: actions/upload-artifact@v4
-      with:
-        name: AmneziaVPN-android-x86
-        path: deploy/build/AmneziaVPN-x86-release.apk
-        compression-level: 0
-        retention-days: 7
+      - name: 'Upload x86 apk'
+        uses: actions/upload-artifact@v4
+        with:
+          name: AmneziaVPN-android-x86
+          path: deploy/build/AmneziaVPN-x86-release.apk
+          compression-level: 0
+          retention-days: 7
 
-    - name: 'Upload arm64-v8a apk'
-      uses: actions/upload-artifact@v4
-      with:
-        name: AmneziaVPN-android-arm64-v8a
-        path: deploy/build/AmneziaVPN-arm64-v8a-release.apk
-        compression-level: 0
-        retention-days: 7
+      - name: 'Upload arm64-v8a apk'
+        uses: actions/upload-artifact@v4
+        with:
+          name: AmneziaVPN-android-arm64-v8a
+          path: deploy/build/AmneziaVPN-arm64-v8a-release.apk
+          compression-level: 0
+          retention-days: 7
 
-    - name: 'Upload armeabi-v7a apk'
-      uses: actions/upload-artifact@v4
-      with:
-        name: AmneziaVPN-android-armeabi-v7a
-        path: deploy/build/AmneziaVPN-armeabi-v7a-release.apk
-        compression-level: 0
-        retention-days: 7
+      - name: 'Upload armeabi-v7a apk'
+        uses: actions/upload-artifact@v4
+        with:
+          name: AmneziaVPN-android-armeabi-v7a
+          path: deploy/build/AmneziaVPN-armeabi-v7a-release.apk
+          compression-level: 0
+          retention-days: 7
 
-    - name: 'Upload aab'
-      uses: actions/upload-artifact@v4
-      with:
-        name: AmneziaVPN-android
-        path: deploy/build/AmneziaVPN-release.aab
-        compression-level: 0
-        retention-days: 7
+      - name: 'Upload aab'
+        uses: actions/upload-artifact@v4
+        with:
+          name: AmneziaVPN-android
+          path: deploy/build/AmneziaVPN-release.aab
+          compression-level: 0
+          retention-days: 7
 
   Extra:
     runs-on: ubuntu-latest
