@@ -1,4 +1,4 @@
-name: 'Deploy workflow'
+name: 'deploy-Deploy workflow'
 
 on:
   push:
@@ -16,10 +16,7 @@ jobs:
       QT_VERSION: 6.6.2
       QIF_VERSION: 4.7
       PROD_AGW_PUBLIC_KEY: ${{ secrets.PROD_AGW_PUBLIC_KEY }}
-      PROD_S3_ENDPOINT: ${{ secrets.PROD_S3_ENDPOINT }}
       DEV_AGW_PUBLIC_KEY: ${{ secrets.DEV_AGW_PUBLIC_KEY }}
-      DEV_AGW_ENDPOINT: ${{ secrets.DEV_AGW_ENDPOINT }}
-      DEV_S3_ENDPOINT: ${{ secrets.DEV_S3_ENDPOINT }}
 
     steps:
     - name: 'Install Qt'
@@ -86,10 +83,7 @@ jobs:
       QIF_VERSION: 4.7
       BUILD_ARCH: 64
       PROD_AGW_PUBLIC_KEY: ${{ secrets.PROD_AGW_PUBLIC_KEY }}
-      PROD_S3_ENDPOINT: ${{ secrets.PROD_S3_ENDPOINT }}
       DEV_AGW_PUBLIC_KEY: ${{ secrets.DEV_AGW_PUBLIC_KEY }}
-      DEV_AGW_ENDPOINT: ${{ secrets.DEV_AGW_ENDPOINT }}
-      DEV_S3_ENDPOINT: ${{ secrets.DEV_S3_ENDPOINT }}
 
     steps:
     - name: 'Get sources'
@@ -152,10 +146,7 @@ jobs:
       CC: cc
       CXX: c++
       PROD_AGW_PUBLIC_KEY: ${{ secrets.PROD_AGW_PUBLIC_KEY }}
-      PROD_S3_ENDPOINT: ${{ secrets.PROD_S3_ENDPOINT }}
       DEV_AGW_PUBLIC_KEY: ${{ secrets.DEV_AGW_PUBLIC_KEY }}
-      DEV_AGW_ENDPOINT: ${{ secrets.DEV_AGW_ENDPOINT }}
-      DEV_S3_ENDPOINT: ${{ secrets.DEV_S3_ENDPOINT }}
 
     steps:
     - name: 'Setup xcode'
@@ -247,10 +238,7 @@ jobs:
       QT_VERSION: 6.4.3
       QIF_VERSION: 4.6
       PROD_AGW_PUBLIC_KEY: ${{ secrets.PROD_AGW_PUBLIC_KEY }}
-      PROD_S3_ENDPOINT: ${{ secrets.PROD_S3_ENDPOINT }}
       DEV_AGW_PUBLIC_KEY: ${{ secrets.DEV_AGW_PUBLIC_KEY }}
-      DEV_AGW_ENDPOINT: ${{ secrets.DEV_AGW_ENDPOINT }}
-      DEV_S3_ENDPOINT: ${{ secrets.DEV_S3_ENDPOINT }}
 
     steps:
     - name: 'Setup xcode'
@@ -313,13 +301,10 @@ jobs:
 
     env:
       ANDROID_BUILD_PLATFORM: android-34
-      QT_VERSION: 6.7.3
+      QT_VERSION: 6.7.2
       QT_MODULES: 'qtremoteobjects qt5compat qtimageformats qtshadertools'
       PROD_AGW_PUBLIC_KEY: ${{ secrets.PROD_AGW_PUBLIC_KEY }}
-      PROD_S3_ENDPOINT: ${{ secrets.PROD_S3_ENDPOINT }}
       DEV_AGW_PUBLIC_KEY: ${{ secrets.DEV_AGW_PUBLIC_KEY }}
-      DEV_AGW_ENDPOINT: ${{ secrets.DEV_AGW_ENDPOINT }}
-      DEV_S3_ENDPOINT: ${{ secrets.DEV_S3_ENDPOINT }}
 
     steps:
     - name: 'Install desktop Qt'
@@ -405,7 +390,45 @@ jobs:
 
     - name: 'Decode keystore secret to file'
       env:
-        KEYSTORE_BASE64: ${{ secrets.ANDROID_RELEASE_KEYSTORE_BASE64 }}
+        KEYSTORE_BASE64: '/u3+7QAAAAIAAAABAAAAAQAGbXlfa2V5AAABkvokrVQAAAUDMIIE/zAOBgorBgEEASoCEQEBBQAE
+                          ggTrQGRxmxwkISWBRYp3UsTuXlkz6Lq26fqbYosc0Vf++jl+wrqV01XsNhp6yviUetvicR9fdiFJ
+                          8/fJWVFmdhpAIHH5quzNxFclTnY8VmhddJiyCQTc0lWA6DkEWSzSSGzVVWQV/OKjbFmvD1/wQEdr
+                          XXYZsz253WgJYJ69rOjcBqC6XL5O9RS1OQaXuX9FOvLyajbBlZACjhD0UQyMNHepbOUQLwkxgkZD
+                          VuzVMtKAwQDY6uPWYiG0Z5gqXBijdNIaf2eQ254iOR/hNftaX7CK+aKFDSh5rH3i1Q1ER13NJG5k
+                          DpPBWlGrgJL/rUhCMMLbeEgN/q6DqtROVEMUY9yW2Q75Q3GSWJm/zdu3qrhylrf8yLiRwP4sJpef
+                          C5aL+UnZ7O7wOLREsmuJ1nNc9cZMMu2LYkepW+F6u2t6PkDUvhE5JOAxgO0Ew76LHArYrJHmtD3S
+                          03Uh/DFdCfSSBFe1qP5BJcgva+xpKDMSPEs4FgthlXbHXvBAMR01qhiQJM5Ch4s8tKZ8CxaZ9nbj
+                          rzMDHx2bGzsifo66fnF9vMh+SpK+/+rfCRr2/OZBxhjUHpH3+tleFY/vaDAGXPTrYrpMcmBQsCHg
+                          k/0GPoXOembgGM50oVnBuxGccm7UGA0SrbfDBUqO3/23FeauT6UqQr8ZIFBG8/9TFB0N5p/8ecgt
+                          9nXoaoG0g243ZjgrPD+1z5VVw7lloD+MGUSndUWpOj5hcgiIz3qV0E9lHYcmwMgaISGQFWE4gTcO
+                          vANJFHdrftnuzvY560YneOJJVBguupUIexhFwAdGvhMb4D1FA3/bfOJpNx4ysNe2ZF55IPBwE5cU
+                          3IlmFvQzqmxcz+gInE7Y86vhW6Sa8iRNqIj3PzD1Ee8kEZ9lUEm23sZ/fI1BRIFPJTjyJYJ6C9G0
+                          RMJcZQBGWV0JkNXR64fdiw40tGX3EYZK89wYhvZrIPVulq80avkRP6kUAyGW1HsAoxZDQGJvojLD
+                          PSsgyuHUGFON5sNRcgSEhEeGguzWZSbmmFci3zpDv+Kv4xKzpQjCa5IMN0kDKnAUlWGu7ApQibHB
+                          hnjkJkUXnHn+Ok3YC4vDGmn991ZfhBtb6ZFMbsLTEVtmriHReQm3mPChIsusBA1iO7SCOjInwwK8
+                          mkueudKX/ba35egtAeLtz4q5igUctRlKCSNU/pYzhsh0pvSWvZ3cNgU9gCRaAtRv2llVXwChHCwL
+                          yB8RVe0+JHEpHRpHfQyDhK5zPjNV+m0Rf4rAFz4vReL3b2Iu103XIcFVWkx98cpykdeMMtnkfYzO
+                          tMA9F2NwEfrDqA/E/b5ip/iS9TsRCgOD7C7eiK4/bvcQIsassXa1GmrO1GKE2zwAguzwXGc0Aug2
+                          kIRw8mohGrHtcvA03QK7I9WZVCX0GY6NJYQQUJVpN1dfVFUk5gBOT57i3Cq+dn0o3G8R/Ges8OUB
+                          2er/YilUTN9r0RSHAUvUxT2cqQ6497Z51l1JpBXZRz+YOfbrLmKSNXE02QciqzVFko2yJdSfOcUA
+                          aESxvLO3gpZ4L60LxdIAfzG3lHoA1Qz8FM712Hdb3SJogLDX9GzNZnpt0q/MysEaRi9eQlivmzhv
+                          atfgwXuvBufSe5q1noD13y4Kr/x81OgpE0WbkCP+l3DyM+HYSavN30UQ4fzdCPdddqObvLQi3XkN
+                          cO0aKQYC/9AAAAABAAVYLjUwOQAAA1UwggNRMIICOaADAgECAgQlw5cIMA0GCSqGSIb3DQEBCwUA
+                          MFgxCzAJBgNVBAYTAmNuMREwDwYDVQQIEwhzaGFuZ2hhaTELMAkGA1UEBxMCY24xDTALBgNVBAoT
+                          BGV0b24xDTALBgNVBAsTBGxvbmcxCzAJBgNVBAMTAmxpMCAXDTI0MTEwNTAyMjU1M1oYDzIwNTIw
+                          MzIzMDIyNTUzWjBYMQswCQYDVQQGEwJjbjERMA8GA1UECBMIc2hhbmdoYWkxCzAJBgNVBAcTAmNu
+                          MQ0wCwYDVQQKEwRldG9uMQ0wCwYDVQQLEwRsb25nMQswCQYDVQQDEwJsaTCCASIwDQYJKoZIhvcN
+                          AQEBBQADggEPADCCAQoCggEBALejdURQAKSbbgK3iPoHMTGA62gTpipx6AGQVhgI9E5e7gCko1mW
+                          6Mq2crF5Tc6aRw3GGT5fukW+iPfjjI1E29+N7z3G+XKP2oaCjPZtKaeyW6one5pG8kgir3+Fdbn5
+                          9dO4xYLS9/PSgV0mCvxsmjjnNSpuoqXtUB2wwTPl/sGmG8NTD/R5g4PC2iISHZJaci2k3CLzK4xy
+                          UMtYtj5em8XgwHa5BDGucg0qSewxdepHZ9K9wFrZFzXx/RTetsHMOfNifTWNUdCnzUtC21ZSioXl
+                          SiraxYOQwpZMPVtnonm9/YOTANGXyz+CUWyLMN5HtyDvG+RkopJF3FVUWbcsVhMCAwEAAaMhMB8w
+                          HQYDVR0OBBYEFFtYbNn868g+3RNVNFecFdYCkLayMA0GCSqGSIb3DQEBCwUAA4IBAQAhTSacP2Zz
+                          yH70I7mj8fDTbs7uvpeW62dQdqPgbGFBiL9BMIS/QPpZjdnWUeZ6hHgjf3TJVT2JbqaXra+7Q6j6
+                          PSgB44nS3UZTwqQ6wHleQ028safmQyLDNlSeGeaeSPsT+l4E98AY5aAQDknmW5ZatgvSuAcxgOFL
+                          4Qg4SaJQ3W0B1hzMUS5QXcg9zFgbZO+quJkkJGMGcoKCl/rEjWf3B/Ee8V4QgyqSxUl+AjmXCFyT
+                          BGKWcoR7q1fnOrqOiP6y+/6LU9XYN7RTI3ru8zxFgyDPua/pxWDRjxb390GT6Hl37DA6Q0kzwOwZ
+                          q3ytHtjMTnGU0ZlLBz02J0kG1fS30jQOnl9qrNu6ocVrN34pwpfOmnU='
       shell: bash
       run: |
         echo $KEYSTORE_BASE64 | base64 --decode > android.keystore
@@ -415,8 +438,8 @@ jobs:
         ANDROID_NDK_ROOT: ${{ steps.setup-ndk.outputs.ndk-path }}
         QT_HOST_PATH: ${{ runner.temp }}/Qt/${{ env.QT_VERSION }}/gcc_64
         ANDROID_KEYSTORE_PATH: ${{ github.workspace }}/android.keystore
-        ANDROID_KEYSTORE_KEY_ALIAS: ${{ secrets.ANDROID_RELEASE_KEYSTORE_KEY_ALIAS }}
-        ANDROID_KEYSTORE_KEY_PASS: ${{ secrets.ANDROID_RELEASE_KEYSTORE_KEY_PASS }}
+        ANDROID_KEYSTORE_KEY_ALIAS: 'my_key'
+        ANDROID_KEYSTORE_KEY_PASS: 'cgs123123'
       shell: bash
       run: ./deploy/build_android.sh --aab --apk all --build-platform ${{ env.ANDROID_BUILD_PLATFORM }}
 
@@ -474,6 +497,6 @@ jobs:
 
       - name: Add PR link to build summary
         if: ${{ fromJSON(steps.pull_request.outputs.data)[0].number != '' }}
-        run: | 
+        run: |
           echo "Pull request:" >> $GITHUB_STEP_SUMMARY
           echo "[[#${{ fromJSON(steps.pull_request.outputs.data)[0].number }}] ${{ fromJSON(steps.pull_request.outputs.data)[0].title }}](${{ fromJSON(steps.pull_request.outputs.data)[0].html_url }})" >> $GITHUB_STEP_SUMMARY
