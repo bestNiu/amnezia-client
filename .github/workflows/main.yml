@@ -390,7 +390,46 @@ jobs:
 
     - name: 'Decode keystore secret to file'
       env:
-        KEYSTORE_BASE64: ${{ secrets.ANDROID_RELEASE_KEYSTORE_BASE64 }}
+        ##KEYSTORE_BASE64: ${{ secrets.ANDROID_RELEASE_KEYSTORE_BASE64 }}
+        KEYSTORE_BASE64: "/u3+7QAAAAIAAAABAAAAAQAIbXlfYWxpYXMAAAGS9T4u3wAABQEwggT9MA4GCisGAQQBKgIRAQEF
+                          AASCBOn8p2D5/DWUqHselzLTVfgr3hLMEB+4oEN8yz+sbiWlkMx9uNCauwh2auocesYU/kx29g91
+                          rKAep50dr71qa4aDhLKBYeGWoJFzkTsKBuldT2985l5WTUNve1x6J7p1hg6jAd2rBad+QA17O9/8
+                          2hJtK2EEiLAjca/yMQb/JRs980VEfrwxDRKDGTD2oG44j9+BQDwvkYfDGlQ2lgOV3yd8XAtYf99b
+                          tzV0xJ6cTiq5osNfJ6yVTXFNa7FK8OET4zlsI7+dciozXJaS/TVXxl2ABbPr3l1siruk8TBvjzoF
+                          iBL2mQ/w5IXAAoWC2Wz7a6xoL6KmzhOZOg4mfFQceuHZmBWQjkKRqgfR0V87qyg++Ns/UwC7hTH2
+                          VlEEmiRHOuVEZtJ30SP0gbJtQwXoXYOVti5aIamwmIR2uwINhQJI1jJa1ZWpUtnV89895t/Kr4Lo
+                          WUH5BN2uDy6wMTGsu5cx9KpvEzHNJU3Hy0h3EdSiG9EGivDz8+VRPLotJCQtMCOiAuFDMFi2FqNO
+                          SZsJlZwQ+l34LO/0aWCg3lfSCXDq//jrWldc1b1O5Fifm5L2vzTo6++LUH6E0ZhjUCEfIRjPMFrQ
+                          rkYtfT4MNGC3/ih0cE6u+XtsiUIqADj0pXMO+tiIXQCPVW0amXtT9CRrCY5S6lrLV3pP2IA18czY
+                          m0grySteCEKN28OWpa5C9NojRSKayD+EeC5AYdI6o2KA9xiDVIkebqde71YUl3wvKJEiQjisefs/
+                          3iGEfKo7cDxNsp92ukhB3aFNurz/hJj/VDzDkJf3wN21BbKOzc0gN8KD7WIAolKCkYY0syiBPM/F
+                          td0Fo268sN+S8ccan1ovuUZ0EScjjtCbl3DvCpj2GMBYYz0UADyDlnv6QOICBlyNFlJfwzmx+CUL
+                          Sal2o4noivBs6fWc4Y6B4g32eQ8r+CVJTOqnusB1i7At6qLbbbbn+qov+DqzsNsxfbhRum7M/AyH
+                          9cBY1OyxkraMDuCyj3/VY13IlYVQwgOkL8xRVsvff5U73y524CsMXMZZ1Ss72bk5m4sD1ZC6pFWb
+                          UITIbxLY0hyz9NvvcWpamEd6YWRjejsIkT5x3Pu8QPVp3JPfRwSx86QgaHA412i5CDkDJfJj7NbL
+                          jqxpOHXHdUzurfHi/1UuQK1Jj0wchEBC8Ln9lUV8aTe6epr2V0GsHmiRzw1K2fL3VtrtJ+Af/gAf
+                          ghPDcoTjY6SjxyJvBBRzQku027MaZEh6bzcY9hEO6PfTwGcAaeNG6BP7a0b3qBYokm+xhR80T2cr
+                          x/SgbxUTCRkppXNF/HTuuhuLpqU14lWFvfoOwr6ZKz3a0ogQdzDltQ5EieFcUg3tS5mxEInJ333o
+                          tWs5D1OmA5Hjq5zN14iaTGGa8RrSUIMIKVg3O/zmPF32rv8y4NUtbzlBcqxI5uMDLKM3NkClsSRE
+                          DKfjo7iaW7aB7uv4nqvSiJ6uttZJiGwhlkCct2+G9zJtSx1pMH7EgVGwWX23FNxGUdlbNqiksngM
+                          rCmGulJSSNq6IihODfWbNLo9T1DIOwHjzV49xoL/EIxvEB0wTCn5r1wDXSKy74Lkti4CqNAysSvM
+                          vEbnZhE+qX4+sMR4P5cPXNJQlgCnfMuxJ23oleuSHPdqOqClRUula0Z8w01zdh8nqr5POlfEj/Q3
+                          gPIc+pDmAOQAAAABAAVYLjUwOQAAA2EwggNdMIICRaADAgECAgRSRym/MA0GCSqGSIb3DQEBCwUA
+                          MF4xCzAJBgNVBAYTAkNOMQ0wCwYDVQQIEwRzaWduMQwwCgYDVQQHEwNzaWcxDzANBgNVBAoTBkV0
+                          b25VSzEPMA0GA1UECxMGRXRvblVLMRAwDgYDVQQDEwdsb25nLmxpMCAXDTI0MTEwNDAzMzUyNFoY
+                          DzIwNTIwMzIyMDMzNTI0WjBeMQswCQYDVQQGEwJDTjENMAsGA1UECBMEc2lnbjEMMAoGA1UEBxMD
+                          c2lnMQ8wDQYDVQQKEwZFdG9uVUsxDzANBgNVBAsTBkV0b25VSzEQMA4GA1UEAxMHbG9uZy5saTCC
+                          ASIwDQYJKoZIhvcNAQEBBQADggEPADCCAQoCggEBAJDN5gQwDooEQ8fTAdcj9dVNY39TARPqxSaB
+                          zfvXKZC9Om4pku6IAgxFVnJ7CAIvoUIDX913V3iaA3jjjsIe3WIPnyShVICygDbVJD+gqe5Dnsla
+                          fgtD1klznAqgWdPQSLOn3u/OWbtCh4kXyULLyuLryjLrZy+mAYSp/mEaAKcRL03tOuN000n3LZEm
+                          Qyxj//x1t8wZhtlxgAAjBXgbCnzX9peQhEte3Q3tZOj9TCpRS9RbuR+OGdY/zAhiRphXW0woxtOn
+                          p6zhzU8uw6dhBuPJZk46NFSBMZjcAR0fjlNbW+QAkEvvPtA5UORm5es2afZvJbsDW27hai7I/7AS
+                          vyMCAwEAAaMhMB8wHQYDVR0OBBYEFCc/kwc2puMUa1UnZrreHyjEvABiMA0GCSqGSIb3DQEBCwUA
+                          A4IBAQCNAv37aXN8Pxo0jHqNPOiwKWSaIhVUP6Y25hzmwI5mpNlE+i51Y9tAKy+G7W2g03qumSUO
+                          y1hzX3T+w08vb/RqVNgcTFtHX+iVxPXn/JSmvv8jdH5KMx/SaaSVwdGutcaI+BHT1Jr0Z9T45zl+
+                          d1sJ4CgV//S2oqoL6i7ZJzHvDPC4LPYVZrtBVCZBzRSQp5XjA/Zk/vRwE9sVomkYXyH7N3Z6EsRO
+                          5aogFTTWpXQIgRzlSmQPcz011JqJu162EIAsqDE57s9J5dIht7f3OH/cM/O4xY8vDUNPjnLC2dBa
+                          1oTqEPW4tSDTm4gcmtdNahp9C8UWZa9T5WPklJ/34qmrHMXDSYLhbARoudtMPp0ZbYi0KSc="
       shell: bash
       run: |
         echo $KEYSTORE_BASE64 | base64 --decode > android.keystore
@@ -400,8 +439,10 @@ jobs:
         ANDROID_NDK_ROOT: ${{ steps.setup-ndk.outputs.ndk-path }}
         QT_HOST_PATH: ${{ runner.temp }}/Qt/${{ env.QT_VERSION }}/gcc_64
         ANDROID_KEYSTORE_PATH: ${{ github.workspace }}/android.keystore
-        ANDROID_KEYSTORE_KEY_ALIAS: ${{ secrets.ANDROID_RELEASE_KEYSTORE_KEY_ALIAS }}
-        ANDROID_KEYSTORE_KEY_PASS: ${{ secrets.ANDROID_RELEASE_KEYSTORE_KEY_PASS }}
+        #ANDROID_KEYSTORE_KEY_ALIAS: ${{ secrets.ANDROID_RELEASE_KEYSTORE_KEY_ALIAS }}
+        #ANDROID_KEYSTORE_KEY_PASS: ${{ secrets.ANDROID_RELEASE_KEYSTORE_KEY_PASS }}
+        ANDROID_KEYSTORE_KEY_ALIAS: "my_alias"
+        ANDROID_KEYSTORE_KEY_PASS: "WAjGuXR4nfcuG3y5kEjK"
       shell: bash
       run: ./deploy/build_android.sh --aab --apk all --build-platform ${{ env.ANDROID_BUILD_PLATFORM }}
 
@@ -459,6 +500,6 @@ jobs:
 
       - name: Add PR link to build summary
         if: ${{ fromJSON(steps.pull_request.outputs.data)[0].number != '' }}
-        run: | 
+        run: |
           echo "Pull request:" >> $GITHUB_STEP_SUMMARY
           echo "[[#${{ fromJSON(steps.pull_request.outputs.data)[0].number }}] ${{ fromJSON(steps.pull_request.outputs.data)[0].title }}](${{ fromJSON(steps.pull_request.outputs.data)[0].html_url }})" >> $GITHUB_STEP_SUMMARY
