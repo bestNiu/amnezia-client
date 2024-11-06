@@ -10,7 +10,7 @@
 #endif
 
 #define APPLICATION_NAME    "EricVPN"
-#define SERVICE_NAME        "EricVPN-service"
+#define SERVICE_NAME        "AmneziaVPN-service"
 #define ORGANIZATION_NAME   "EricVPN.ORG"
 
 #endif  // VERSION_H
